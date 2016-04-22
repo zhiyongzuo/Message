@@ -3,6 +3,7 @@ package com.example.tomsdeath.message;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -29,6 +30,7 @@ public class SendActivity extends Activity implements View.OnClickListener {
     @Bind(R.id.floating_action_button_send) FloatingActionButton send;
     @Bind(R.id.add_contacts) ImageButton add_contacts;
     @Bind(R.id.name) TextView name;
+    private static final int REQUEST_CODE = 1;
     String snumber = "";
     String stext;
 
@@ -65,7 +67,7 @@ public class SendActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             default:
                 break;
@@ -75,17 +77,28 @@ public class SendActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data!=null) {
-            Uri uri = data.getData();
-            Cursor cursor = getContentResolver().query(uri,
-                    new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME }, null, null, null);
-            while (cursor.moveToNext()) {
-                number.setText(cursor.getString(0));
-                name.setText(cursor.getString(1));
-            }
-            if(cursor != null) {
-                cursor.close();
-            }
+        switch(resultCode) {
+            case REQUEST_CODE:
+                if(data!=null) {
+                    Uri uri = data.getData();
+                    CursorLoader cl = new CursorLoader(SendActivity.this, uri, null, null, null, null);
+                    Cursor cursor = cl.loadInBackground();
+                    if(cursor.moveToFirst()) {
+                        int _id = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                        String nameStr = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                        name.setText(nameStr);
+                        Cursor cursor2 = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                                ContactsContract.Contacts._ID + "=", new String[]{String.valueOf(_id)}, null);
+                        while (cursor2.moveToNext()) {
+                            number.setText(cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                        }
+                        cursor2.close();
+                    }
+                    cursor.close();
+                }
+                break;
+            default:
+                break;
         }
     }
 }
