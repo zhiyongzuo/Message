@@ -1,0 +1,61 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:id="@+id/name"
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"/>
+           <EditText
+               android:id="@+id/number"
+               android:singleLine="true"
+               android:inputType="number"
+               android:hint="@string/phone_number"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <EditText
+        android:id="@+id/text_edit"
+        android:hint="@string/text"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/floating_action_button_send"
+        android:layout_marginRight="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_button_send"
+        android:text="@string/send"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:id="@+id/add_contacts"
+        android:layout_marginLeft="2dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
+
+

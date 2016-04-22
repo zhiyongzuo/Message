@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Message</string>
+
+    <string name="hello_world">text what you want</string>
+    <string name="action_settings">Settings</string>
+    <string name="send">Send</string>
+    <string name="text">text</string>
+    <string name="phone_number">phone number</string>
+</resources>
