@@ -1,4 +1,5 @@
 # Message
 a Message app
 
-![Screenshot](http://localhost:8080/test/j1.jpg)
+![ScreenShot](https://github.com/zhiyongzuo/Message/blob/master/app/src/main/res/drawable/j1.png)
+![ScreenShot](https://github.com/zhiyongzuo/Message/blob/master/app/src/main/res/drawable/j2.png)
